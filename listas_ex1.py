@@ -29,3 +29,8 @@ for marca in marcas:
 print(f"A marca {mmaior} é a que tem mais veículos com {maior} carros")
 
 #remover todos os veículos da marca indicada pelo utilizador
+marca_remover=input("Qual a marca que deseja remover? ")
+while marca_remover in carros:
+    carros.remove(marca_remover)
+
+print(carros)

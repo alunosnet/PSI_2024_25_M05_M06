@@ -27,13 +27,28 @@ def Vender(produto,quantidade):
     """Recebe o produto e a quantidade a vender, atualiza e mostra o stock"""
     if Existe(produto) == False:
         return
-    pass
+    quantidade = int(quantidade)
+    posicao = produtos.index(produto)
+    quantidade_stock = stock[posicao]
+    if quantidade_stock < quantidade:
+        print("Não existe quantidade suficiente disponível.")
+        return
+    stock[posicao] -= quantidade
+    print(f"Venda registada com sucesso. Ficou com {stock[posicao]}{unidades[posicao]} de {produto}.")
 
 def Comprar(produto,quantidade):
     """Recebe o produto e a quantidade comprar, atualiza o stock e mostra o stock atualizado"""
     if Existe(produto) == False:
+        op = input("Pretende adicionar este produto?")
+        if op in "sS":
+            produtos.append(produto)
+            stock.append(int(quantidade))
+            unidades.append(input("Qual a unidade de medida?"))
         return
-    pass
+    quantidade = int(quantidade)
+    posicao = produtos.index(produto)
+    stock[posicao] += quantidade
+    print(f"Compra registada com sucesso. Ficou com {stock[posicao]}{unidades[posicao]} de {produto}")
 
 def Consultar(produto):
     """Recebe o produto e mostra a quantidade em stock"""
@@ -61,8 +76,16 @@ def Comando(texto):
     if partes[0]=="consultar":
         Consultar(partes[1])
     if partes[0]=="vender":
+        #comando necessita de 3 partes e a segunda tem de ser um nº
+        if (len(partes)!=3 or partes[1].isdigit()==False):
+            print("Comando não é válido")
+            return True
         Vender(partes[2],partes[1])
     if partes[0]=="comprar":
+        #comando necessita de 3 partes e a segunda tem de ser um nº
+        if (len(partes)!=3 or partes[1].isdigit()==False):
+            print("Comando não é válido")
+            return True
         Comprar(partes[2],partes[1])
 
 def main():

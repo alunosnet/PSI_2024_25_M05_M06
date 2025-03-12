@@ -10,7 +10,12 @@ Requisitos funcionais:
 """
 import utils, livros
 
+#Deve estar True quando em testes e False quando em produção
+DEBUG =True
+
 def MenuPrincipal():
+    if DEBUG:
+        livros.configurar()
     op = 0
     while op!=5:
         op = utils.Menu(["Livros","Leitores","Empréstimos/devoluções","Estatísticas","Sair"],"Menu principal")

@@ -17,7 +17,7 @@ def ler_numero_inteiro(mensagem="Introduza um valor inteiro: ") -> int:
 
 def ler_numero_inteiro_limites(valor_min,valor_max=None, mensagem="Introduza um valor inteiro: ") -> int:
     """
-    Função que recebe o valor minimo e máximo a ler do utilizador. A função devolve o valor quando é um inteiro válido.
+    Função que recebe o valor minimo e máximo a ler do utilizador. A função devolve o valor quando é um inteiro válido. Mostra uma mensagem para a introdução do valor.
     """
     while True:
         numero = ler_numero_inteiro(mensagem)
@@ -75,3 +75,15 @@ def Menu(opcoes,titulo=""):
 def Media(valores):
     """Devolve a média dos valores de um tuple ou list"""
     return sum(valores)/len(valores)
+
+#Alterado em 12-03-2025
+def ler_string(tamanho_minimo,mensagem="Introduza um texto:"):
+    """
+    Função devolve uma string com um minimo de letras. Remove os espaços em branco no inicio e no final. Mostra uma mensagem para introdução do texto.
+    """
+    while True:
+        texto = input(mensagem)
+        texto = texto.strip()
+        if len(texto)>=tamanho_minimo:
+            return texto
+        print(f"O texto inserido não é válido. Tem de ter no minimo {tamanho_minimo} de letras.")

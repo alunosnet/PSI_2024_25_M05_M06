@@ -18,6 +18,8 @@ exemplo_livros =[
         'editora' : 'editora a','ano' : 2021,'estado' : 'disponível',
         'leitor' : None,'nr_emprestimos' : 0}
 ]
+#campos que não podem ser editados pelo utilizador
+lista_campos_privados = ["id","estado","leitor","nr_emprestimos"]
 
 def configurar():
     """Insere dados de exemplo"""
@@ -36,11 +38,11 @@ def MenuLivros():
         if op == 2:
             Listar(livros)
         if op == 3:
-            pass
+            Editar()
         if op == 4:
             pass
         if op == 5:
-            pesquisar()
+            pesquisar_listar()
 
 #Adicionar Livro
 def Adicionar():
@@ -84,8 +86,49 @@ def Listar(lista_a_listar):
         print("-"*80)
 
 #Editar Livro
+def Editar():
+    #pesquisar o livro a editar
+    livros_editar=pesquisar()
+    #mostrar os dados de cada livro encontrado
+    if len(livros_editar)==0:
+        print("Não foram encontrados livros.")
+        return
+    # mostrar os livros encontrados
+    Listar(livros_editar)
+    #permitir alterar os dados
+    id = utils.ler_numero_inteiro("Introduza o id do livro a editar ou 0 (zero) para cancelar: ")
+    if id==0:
+        return
+    #livro com o id indicado
+    livro = None
+    for l in livros_editar:
+        if l['id']==id:
+            livro = l
+            break
+    if livro == None:
+        print("O id indicado não existe")
+        return
+    #escolher o campo a editar
+    lista_campos = list(livro.keys())
+    #remover os campos privados
+    for c in lista_campos_privados:
+        lista_campos.remove(c)
+    op = utils.Menu(lista_campos,"Qual o campo a editar?")
+    campo = lista_campos[op-1]
+    #mostrar o valor atual do campo a editar
+    print(f"O campo {campo} tem o valor {livro[campo]}")
+    novo_valor = utils.ler_string(3,"Novo valor: ")
+    #guardar o novo valor
+    livro[campo] = novo_valor
+    print("Edição concluída com sucessos.")
 
 #Apagar Livro
+def Apagar():
+    pass
+
+def pesquisar_listar():
+    resultado = pesquisar()
+    Listar(resultado)
 
 #Pesquisar Livros
 def pesquisar():
@@ -103,4 +146,4 @@ def pesquisar():
     for livro in livros:
         if pesquisa.lower() in livro[campo].lower():
             l_resultados.append(livro)
-    Listar(l_resultados)
+    return l_resultados

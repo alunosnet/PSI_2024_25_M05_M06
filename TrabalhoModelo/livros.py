@@ -21,6 +21,13 @@ exemplo_livros =[
 #campos que não podem ser editados pelo utilizador
 lista_campos_privados = ["id","estado","leitor","nr_emprestimos"]
 
+def GetLivro(id):
+    #Devolve o livro com base no id indicado
+    for livro in livros:
+        if livro['id'] == id:
+            return livro
+    return None
+
 def configurar():
     """Insere dados de exemplo"""
     livros.extend(exemplo_livros)
